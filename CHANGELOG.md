@@ -2,6 +2,9 @@
 
 ### master
 - Remove deprecated "restoring shell history" feature.
+- Fix panes restoring in `$HOME` when the pane title is empty. `read` merged
+  adjacent tabs, shifting every later field of the pane line (including the
+  directory) one position left. Save files keep their format.
 
 ### v4.0.0, 2022-04-10
 - Proper handling of `automatic-rename` window option.

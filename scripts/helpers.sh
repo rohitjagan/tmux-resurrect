@@ -59,6 +59,17 @@ remove_first_char() {
 	echo "$1" | cut -c2-
 }
 
+# Save file fields are tab-separated, but tab is IFS whitespace: `read` merges
+# adjacent tabs, so an empty field (e.g. an empty pane_title) shifts every later
+# field one position to the left. Piping a line through
+# `tabs_to_read_delimiter` and reading with `IFS=$read_delimiter` keeps empty
+# fields in place. The delimiter is never written to the save file.
+read_delimiter=$'\037'
+
+tabs_to_read_delimiter() {
+	tr '\t' "$read_delimiter"
+}
+
 capture_pane_contents_option_on() {
 	local option="$(get_tmux_option "$pane_contents_option" "off")"
 	[ "$option" == "on" ]
